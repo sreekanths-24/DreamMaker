@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('core.urls')), # Add this line to include the core app's URLs
     path('users/', include('django.contrib.auth.urls')), # Add this line to include the users app's URLs
     path('users/', include('users.urls')),
+    path('eventmanagement/', include('eventmanagement.urls')), # Add this line to include the eventmanagement app's URLs
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)# Add this line to include the core app's URLs

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
-    'users.apps.UsersConfig' # Add the core app to the list of installed apps
+    'users.apps.UsersConfig',
+    'eventmanagement.apps.EventmanagementConfig' # Add the core app to the list of installed apps
 ]
 
 MIDDLEWARE = [
