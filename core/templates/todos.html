@@ -1,0 +1,219 @@
+{% extends 'index.html' %} {% block content %}
+<!-- <a href="{% url 'logout_user' %}">Logout</a>
+<a href="{% url 'index' %}">Home</a> -->
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Todo List</h5>
+
+    <!-- Bordered Tabs Justified -->
+    <ul
+      class="nav nav-tabs nav-tabs-bordered d-flex"
+      id="borderedTabJustified"
+      role="tablist"
+    >
+      <li class="nav-item flex-fill" role="presentation">
+        <button
+          class="nav-link w-100 active"
+          id="home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#bordered-justified-home"
+          type="button"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+        >
+          All items
+        </button>
+      </li>
+      <li class="nav-item flex-fill" role="presentation">
+        <button
+          class="nav-link w-100"
+          id="profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#bordered-justified-profile"
+          type="button"
+          role="tab"
+          aria-controls="profile"
+          aria-selected="false"
+        >
+          Add Items
+        </button>
+      </li>
+      <!-- <li class="nav-item flex-fill" role="presentation">
+        <button
+          class="nav-link w-100"
+          id="contact-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#bordered-justified-contact"
+          type="button"
+          role="tab"
+          aria-controls="contact"
+          aria-selected="false"
+        >
+          Contact
+        </button>
+      </li> -->
+    </ul>
+    <br />
+    <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+      <div
+        class="tab-pane fade show active"
+        id="bordered-justified-home"
+        role="tabpanel"
+        aria-labelledby="home-tab"
+      >
+        <div style="overflow-x: auto">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Actions</th>
+                <th scope="col">Title</th>
+                <th scope="col">Due Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for todo in todos %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>
+                  {% if todo.complete %}
+                  <form
+                    method="post"
+                    action="{% url 'mark_uncompleted' todo.id %}"
+                  >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-white">✅</button>
+                  </form>
+                  {% else %}
+                  <form
+                    method="post"
+                    action="{% url 'mark_completed' todo.id %}"
+                  >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-white">⭕</button>
+                  </form>
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="{% url 'todo_detail' todo.id %}">{{ todo.title }}</a>
+                </td>
+                <td>{{ todo.duedate }}</td>
+                <td>
+                  {% if todo.complete %} Completed on {{ todo.completed_at }} {% else %}
+                  incomplete {% endif %}
+                </td>
+
+                <td>
+                  <a
+                    href="{% url 'todo_delete' todo.id %}"
+                    class="btn btn-danger"
+                    >🗑</a
+                  >
+                  <a
+                    href="{% url 'todo_edit' todo.id %}"
+                    class="btn btn-primary"
+                    >📝</a
+                  >
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- Table with hoverable rows -->
+
+        <!-- <ul>
+        {% for todo in todos %}
+        <li>
+          <a href="{% url 'todo_detail' todo.id %}"
+            >Title: {{ todo.title }}</a
+          >
+          <p>Description: {{ todo.description }}</p>
+          <p>Due Date: {{ todo.duedate }}</p>
+          <p>Created at: {{ todo.created }}</p>
+
+          {% if todo.complete %}
+          <p>Status: completed</p>
+          <p>Completed At: {{ todo.completed_at }}</p>
+
+          <form method="post" action="{% url 'mark_uncompleted' todo.id %}">
+            {% csrf_token %}
+            <button type="submit">✅</button>
+          </form>
+          {% else %}
+          <p>Status: incompleted</p>
+          <form method="post" action="{% url 'mark_completed' todo.id %}">
+            {% csrf_token %}
+            <button type="submit">⭕</button>
+          </form>
+          {% endif %}
+          <a href="{% url 'todo_delete' todo.id %}">🗑</a>
+          <a href="{% url 'todo_edit' todo.id %}">📝</a>
+        </li>
+        <br /><br />
+        {% endfor %}
+      </ul> -->
+      </div>
+      <div
+        class="tab-pane fade"
+        id="bordered-justified-profile"
+        role="tabpanel"
+        aria-labelledby="profile-tab"
+      >
+        <!-- Vertical Form -->
+        <form method="POST" class="row g-3">
+          {% csrf_token %}
+
+          <div class="col-12">
+            <label for="inputNanme4" class="form-label">Todo Title</label>
+            <input
+              type="text"
+              name="title"
+              placeholder="Type your todo item"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-12">
+            <label for="inputEmail4" class="form-label">Description</label>
+            <textarea
+              name="description"
+              placeholder="Give your item a description, Add a todo item which will take you 1 step closer to your dream"
+              cols="30"
+              rows="10"
+              class="form-control"
+              style="resize: none"
+              required
+            ></textarea>
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label">Due Date</label>
+            <input type="date" name="duedate" class="form-control" required />
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+          </div>
+        </form>
+      </div>
+      <!-- <div
+        class="tab-pane fade"
+        id="bordered-justified-contact"
+        role="tabpanel"
+        aria-labelledby="contact-tab"
+      >
+        Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi
+        debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam.
+        Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum
+        iure. Dignissimos fuga tempore dolor.
+      </div> -->
+    </div>
+    <!-- End Bordered Tabs Justified -->
+  </div>
+</div>
+
+{% endblock %}

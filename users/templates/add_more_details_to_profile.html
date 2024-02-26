@@ -1,0 +1,8 @@
+{% extends 'index.html' %} {% block content %}
+<!-- add_more_details_to_profile.html -->
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Save</button>
+  <a href="{% url 'index' %}" class="btn btn-outline-secondary">Back</a>
+</form>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'index.html' %} {% block content %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ todo.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Due Date: {{ todo.duedate }}</h6>
+    <p class="card-text">{{ todo.description }}</p>
+    <h6 class="card-subtitle mb-2 text-muted">Created: {{ todo.created }}</h6>
+    {% if todo.complete %}
+    <p>Completed At: {{ todo.completed_at }}</p>
+
+    <form method="post" action="{% url 'mark_uncompleted' todo.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Mark As Incomplete</button>
+    </form>
+    {% else %}
+    <h6 class="card-subtitle mb-2 text-muted">Status: Incomplete</h6>
+    <form method="post" action="{% url 'mark_completed' todo.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success">Mark As Complete</button>
+    </form>
+    {% endif %}
+    <a href="{% url 'todo_delete' todo.id %}" class="btn btn-outline-danger"
+      >Delete Item</a
+    >
+    <a href="{% url 'todo_edit' todo.id %}" class="btn btn-outline-primary"
+      >Edit Item</a
+    >
+    <a href="{% url 'todos' %}" class="btn btn-outline-secondary">Back</a>
+  </div>
+</div>
+<!-- End Card with titles, buttons, and links -->
+
+<!-- <ul>
+  <li>
+    <p>Title: {{ todo.title }}</p>
+    <p>Description: {{ todo.description }}</p>
+    <p>Due Date: {{ todo.duedate }}</p>
+    <p>Completed: {{ todo.complete }}</p>
+    <p>Created: {{ todo.created }}</p>
+
+    <a href="{% url 'todo_delete' todo.id %}">🗑</a>
+    <a href="{% url 'todo_edit' todo.id %}">📝</a>
+    {% if todo.complete %}
+    <p>Completed At: {{ todo.completed_at }}</p>
+
+    <form method="post" action="{% url 'mark_uncompleted' todo.id %}">
+      {% csrf_token %}
+      <button type="submit">✅</button>
+    </form>
+    {% else %}
+    <form method="post" action="{% url 'mark_completed' todo.id %}">
+      {% csrf_token %}
+      <button type="submit">⭕</button>
+    </form>
+    {% endif %}
+  </li>
+</ul> -->
+{% endblock %}
