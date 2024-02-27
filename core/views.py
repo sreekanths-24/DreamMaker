@@ -1,6 +1,7 @@
 from datetime import datetime, date
 from django.shortcuts import render, redirect
 from .models import Todo
+from eventmanagement.models import Events
 from django.contrib import messages
 from .forms import *
 # Create your views here.
@@ -28,10 +29,15 @@ def todos(request):
             if duedate < date.today():
                 messages.error(request, "Due date cannot be in the past.")
                 return redirect('todos')
-
+            # Create a new todo object and save it to the database
             ob = Todo(title=title, description=description, complete=complete, user=request.user, duedate=duedate)
             ob.save()
-            messages.success(request, 'Todo added successfully')
+            # Add the todo to the calendar
+            # obj = Events(user = request.user, name = title, startdate = duedate, enddate = duedate, description = description)
+            # obj.save()
+
+            
+            messages.success(request, 'Todo added successfully and marked in calendar.')
 
             return redirect('todos') 
         else:
@@ -91,11 +97,22 @@ def todo_delete(request, id):  # New view function to delete a task
 def todo_edit(request, id):  # New view function to edit a task
     if request.user.is_authenticated:    
         current_todo = Todo.objects.get(id=id)
+        save_current_todo = current_todo
         form = TodoEditForm(request.POST or None, instance=current_todo)
         if form.is_valid():
             form.save()
             messages.success(request, "Todo  updated successfully!!")
             return redirect('todos')
+
+        # Check if the title of the todo has been updated
+        # current_todo = Todo.objects.get(id=id)
+        # print(save_current_todo.title)
+        # print(current_todo.title)
+        # if save_current_todo != current_todo:
+        #     obj = Events.obejects.get(name=save_current_todo.title, user=request.user)
+        #     obj.name = current_todo.title
+        #     messages.success(request, "Title updated in the calendar successfully!!")
+        #     return redirect('todos')
         username = request.user.username
         profile_image = request.user.profile.image.url
         name = request.user.first_name + ' ' + request.user.last_name

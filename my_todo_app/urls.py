@@ -17,11 +17,15 @@ from django.contrib import admin
 from django.urls import path, include # Add this line to include the include function
 from django.conf import settings
 from django.conf.urls.static import static
-
+from eventmanagement import views 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')), # Add this line to include the core app's URLs
     path('users/', include('django.contrib.auth.urls')), # Add this line to include the users app's URLs
     path('users/', include('users.urls')),
     path('eventmanagement/', include('eventmanagement.urls')), # Add this line to include the eventmanagement app's URLs
+    path('all_events/', views.all_events, name='all_events'),
+    path('add_event/', views.add_event, name='add_event'),
+    path('update_event/', views.update_event, name='update_event'),
+    path('remove/', views.remove, name='remove'),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)# Add this line to include the core app's URLs

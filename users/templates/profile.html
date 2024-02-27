@@ -14,12 +14,21 @@
           <h2>{{ user.first_name }} {{ user.last_name }}</h2>
           <h3>{{ user.username }}</h3>
           <div class="social-links mt-2">
-            <a href="{{ profile.twitter_link }}" class="twitter"
+            {% if profile.twitter_link %}
+            <a
+              href="https://twitter.com/{{ profile.twitter_link }}"
+              target="_blank"
+              class="twitter"
               ><i class="bi bi-twitter"></i
             ></a>
-            <a href="{{ profile.linkedin_link }}" class="linkedin"
+            {% endif %} {% if profile.linkedin_link %}
+            <a
+              href="https://www.linkedin.com/in/{{ profile.linkedin_link }}"
+              target="_blank"
+              class="linkedin"
               ><i class="bi bi-linkedin"></i
             ></a>
+            {% endif %}
           </div>
         </div>
       </div>
