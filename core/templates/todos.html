@@ -1,4 +1,4 @@
-{% extends 'index.html' %} {% block content %}
+{% extends 'base.html' %} {% block content %}
 <!-- <a href="{% url 'logout_user' %}">Logout</a>
 <a href="{% url 'index' %}">Home</a> -->
 
@@ -8,11 +8,11 @@
 
     <!-- Bordered Tabs Justified -->
     <ul
-      class="nav nav-tabs nav-tabs-bordered d-flex"
+      class="nav nav-tabs nav-tabs-bordered"
       id="borderedTabJustified"
       role="tablist"
     >
-      <li class="nav-item flex-fill" role="presentation">
+      <li class="nav-item" role="presentation">
         <button
           class="nav-link w-100 active"
           id="home-tab"
@@ -26,7 +26,7 @@
           All items
         </button>
       </li>
-      <li class="nav-item flex-fill" role="presentation">
+      <li class="nav-item" role="presentation">
         <button
           class="nav-link w-100"
           id="profile-tab"
@@ -67,18 +67,17 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">#</th>
                 <th scope="col">Actions</th>
                 <th scope="col">Title</th>
                 <th scope="col">Due Date</th>
                 <th scope="col">Status</th>
+                <th scope="col">Priority</th>
                 <th scope="col">Update</th>
               </tr>
             </thead>
             <tbody>
               {% for todo in todos %}
               <tr>
-                <th scope="row">{{ forloop.counter }}</th>
                 <td>
                   {% if todo.complete %}
                   <form
@@ -103,8 +102,21 @@
                 </td>
                 <td>{{ todo.duedate }}</td>
                 <td>
-                  {% if todo.complete %} Completed on {{ todo.completed_at }} {% else %}
-                  incomplete {% endif %}
+                  {% if todo.complete %} Completed on {{ todo.completed_at }} 
+                  {% else %} incomplete {% endif %}
+                </td>
+                <td>
+                  {% if todo.priority == "Urgent/Important" %}
+                  <span class="badge bg-danger">Urgent/Important</span>
+                  {% elif todo.priority == "Not Urgent/Important" %}
+                  <span class="badge bg-warning">Not Urgent/Important</span>
+                  {% elif todo.priority == "Urgent/Not Important" %}
+                  <span class="badge bg-primary">Urgent/Not Important</span>
+                  {% elif todo.priority == "Not Urgent/Not Important" %}
+                  <span class="badge bg-secondary"
+                    >Not Urgent/Not Important</span
+                  >
+                  {% endif %}
                 </td>
 
                 <td>
@@ -193,6 +205,17 @@
           <div class="col-12">
             <label for="inputAddress" class="form-label">Due Date</label>
             <input type="date" name="duedate" class="form-control" required />
+          </div>
+          <div class="col-12">
+            <label for="priority" class="form-label">Priority</label>
+            <select id="priority" name="priority" required class="form-select">
+              <option value="Urgent/Important">Urgent/Important</option>
+              <option value="Not Urgent/Important">Not Urgent/Important</option>
+              <option value="Urgent/Not Important">Urgent/Not Important</option>
+              <option value="Not Urgent/Not Important">
+                Not Urgent/Not Important
+              </option>
+            </select>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-primary">Submit</button>

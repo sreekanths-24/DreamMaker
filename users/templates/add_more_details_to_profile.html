@@ -1,4 +1,4 @@
-{% extends 'index.html' %} {% block content %}
+{% extends 'base.html' %} {% block content %}
 <!-- add_more_details_to_profile.html -->
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %} {{ form.as_p }}

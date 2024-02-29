@@ -10,6 +10,7 @@ class Todo(models.Model):
     complete = models.BooleanField(default=False)
     completed_at = models.DateField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+    priority = models.CharField(max_length=100)
 
     def __str__(self):
         return self.title

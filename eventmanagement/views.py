@@ -2,25 +2,55 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from core.models import Todo
 from .models import *
+from .forms import *
+from django.shortcuts import redirect
+from django.contrib import messages
 # Create your views here.
 def events(request):
     if request.user.is_authenticated:
-        all_events = Events.objects.filter(user=request.user)
+        current_user = request.user
+        form = EventEditForm(request.POST or None, initial={'user': current_user})
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Event  added successfully!!")
+                return redirect('events')
+        else:
+            all_events = Events.objects.filter(user=request.user)
         
+            username = request.user.username
+            profile_image = request.user.profile.image.url
+            name = request.user.first_name + ' ' + request.user.last_name
+            
+            context = {
+                'events': all_events,
+                'username': username, 
+                'profile_image': profile_image, 
+                'name': name,
+                'form': form
+            }
+
+            return render(request, 'events.html', context)
+    else:
+        messages.success(request, "You must be logged in to view your events.")
+        return redirect('index')
+
+def event_detail(request, id):
+    if request.user.is_authenticated:
+        current_event = Events.objects.get(id=id)
+        form = EventEditForm(request.POST or None, instance=current_event)
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Event updated successfully!!")
+                return redirect('events')
+        obj = Events.objects.get(id=id)
         username = request.user.username
         profile_image = request.user.profile.image.url
         name = request.user.first_name + ' ' + request.user.last_name
-        
-        context = {
-            'events': all_events,
-            'username': username, 
-            'profile_image': profile_image, 
-            'name': name
-        }
-
-        return render(request, 'events.html', context)
+        return render(request, 'edit_events.html', {'event': obj, 'username': username, 'profile_image': profile_image, 'name': name, 'form': form})
     else:
-        messages.success(request, "You must be logged in to view your events.")
+        messages.success(request, "You must be logged in to view event details.")
         return redirect('index')
 
 def all_events(request):

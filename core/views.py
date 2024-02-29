@@ -21,7 +21,7 @@ def todos(request):
             description = request.POST['description']
             duedate_str = request.POST['duedate']
             complete = False
-
+            priority = request.POST['priority']
             # Parse the due date string to a date object
             duedate = datetime.strptime(duedate_str, '%Y-%m-%d').date()
 
@@ -30,7 +30,7 @@ def todos(request):
                 messages.error(request, "Due date cannot be in the past.")
                 return redirect('todos')
             # Create a new todo object and save it to the database
-            ob = Todo(title=title, description=description, complete=complete, user=request.user, duedate=duedate)
+            ob = Todo(title=title, description=description, complete=complete, user=request.user, duedate=duedate, priority=priority)
             ob.save()
             # Add the todo to the calendar
             # obj = Events(user = request.user, name = title, startdate = duedate, enddate = duedate, description = description)
