@@ -4,6 +4,10 @@ from .models import Todo
 from eventmanagement.models import Events
 from django.contrib import messages
 from .forms import *
+from datetime import timedelta
+from django.utils import timezone
+from datetime import date
+
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
@@ -13,6 +17,31 @@ def index(request):
         return render(request, 'index.html' , {'username': username, 'profile_image': profile_image, 'name': name})
     else:
         return render(request, 'index.html')
+
+
+def dashboard(request):
+    if request.user.is_authenticated:
+        username = request.user.username
+        profile_image = request.user.profile.image.url
+        name = request.user.first_name + ' ' + request.user.last_name
+        todaysdate = timezone.now().date()
+        # todos = Todo.objects.filter(user=request.user, created__date=todaysdate).order_by('-created')
+        todos = Todo.objects.filter(user=request.user, duedate=date.today()).order_by('-created')
+        events = Events.objects.filter(user=request.user, startdate=date.today())
+
+        context = {
+            'username': username, 
+            'profile_image': profile_image, 
+            'name': name,
+            'todos': todos,
+            'events': events,
+            'todaysdate': todaysdate,
+        }
+
+        return render(request, 'dashboard.html', context)
+    else:
+        return render(request, 'dashboard.html')
+
 
 def todos(request):
     if request.user.is_authenticated:

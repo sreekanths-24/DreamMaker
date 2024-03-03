@@ -102,34 +102,56 @@
                 </td>
                 <td>{{ todo.duedate }}</td>
                 <td>
-                  {% if todo.complete %} Completed on {{ todo.completed_at }} 
-                  {% else %} incomplete {% endif %}
-                </td>
-                <td>
-                  {% if todo.priority == "Urgent/Important" %}
-                  <span class="badge bg-danger">Urgent/Important</span>
-                  {% elif todo.priority == "Not Urgent/Important" %}
-                  <span class="badge bg-warning">Not Urgent/Important</span>
-                  {% elif todo.priority == "Urgent/Not Important" %}
-                  <span class="badge bg-primary">Urgent/Not Important</span>
-                  {% elif todo.priority == "Not Urgent/Not Important" %}
-                  <span class="badge bg-secondary"
-                    >Not Urgent/Not Important</span
-                  >
+                  {% if todo.complete %}
+                  <h5>
+                    <span class="badge bg-success"
+                      >Completed on {{ todo.completed_at }}</span
+                    >
+                  </h5>
+                  {% else %} {% if todo.duedate < todaysdate %}
+                  <h5>
+                    <span class="badge bg-danger">Overdue</span>
+                  </h5>
+                  {% endif %}
+                  <h5>
+                    <span class="badge bg-warning">Incomplete</span>
+                  </h5>
                   {% endif %}
                 </td>
 
                 <td>
-                  <a
-                    href="{% url 'todo_delete' todo.id %}"
-                    class="btn btn-danger"
-                    >🗑</a
+                  <h5>
+                    {% if todo.priority == "Urgent/Important" %}
+                    <span class="badge bg-danger">Urgent/Important</span>
+                    {% elif todo.priority == "Not Urgent/Important" %}
+                    <span class="badge bg-warning">Not Urgent/Important</span>
+                    {% elif todo.priority == "Urgent/Not Important" %}
+                    <span class="badge bg-primary">Urgent/Not Important</span>
+                    {% elif todo.priority == "Not Urgent/Not Important" %}
+                    <span class="badge bg-secondary"
+                      >Not Urgent/Not Important</span
+                    >
+                    {% endif %}
+                  </h5>
+                </td>
+
+                <td>
+                  <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic mixed styles example"
                   >
-                  <a
-                    href="{% url 'todo_edit' todo.id %}"
-                    class="btn btn-primary"
-                    >📝</a
-                  >
+                    <a
+                      href="{% url 'todo_delete' todo.id %}"
+                      class="btn btn-danger"
+                      >Delete</a
+                    >
+                    <a
+                      href="{% url 'todo_edit' todo.id %}"
+                      class="btn btn-outline-primary"
+                      >Edit</a
+                    >
+                  </div>
                 </td>
               </tr>
               {% endfor %}

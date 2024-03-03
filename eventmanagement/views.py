@@ -53,6 +53,16 @@ def event_detail(request, id):
         messages.success(request, "You must be logged in to view event details.")
         return redirect('index')
 
+def event_delete(request, id):
+    if request.user.is_authenticated:
+        event = Events.objects.get(id=id)
+        event.delete()
+        messages.success(request, "Event deleted successfully!!")
+        return redirect('events')
+    else:
+        messages.success(request, "You must be logged in to delete an event.")
+        return redirect('index')
+
 def all_events(request):
     all_events = Events.objects.filter(user=request.user)
     all_todos = Todo.objects.filter(user=request.user)

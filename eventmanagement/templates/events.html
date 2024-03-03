@@ -66,29 +66,42 @@
         role="tabpanel"
         aria-labelledby="profile-tab"
       >
-        <!-- Table with hoverable rows -->
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Start Date</th>
-              <th scope="col">End Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for event in events %}
-            <tr>
-              <th scope="row">{{ forloop.counter }}</th>
-              <td>
-                <a href="{% url 'event_detail' event.id %}">{{ event.name }}</a>
-              </td>
-              <td>{{ event.startdate }}</td>
-              <td>{{ event.enddate }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        <div style="overflow-x: auto">
+          <!-- Table with hoverable rows -->
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for event in events %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>
+                  <a href="{% url 'event_detail' event.id %}"
+                    >{{ event.name }}</a
+                  >
+                </td>
+                <td>{{ event.startdate }}</td>
+                <td>{{ event.enddate }}</td>
+                <td>
+                  <a
+                    href="{% url 'event_delete' event.id %}"
+                    class="btn btn-danger"
+                    >Delete</a
+                  >
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
         <!-- End Table with hoverable rows -->
       </div>
       <div

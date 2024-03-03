@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('todos/', views.todos, name='todos'),  # Add a trailing slash for consistency
     path('todo_detail/<int:id>/', views.todo_detail, name='todo_detail'),  # Add a trailing slash for consistency
     path('todo_detail/<int:id>/mark_completed/', views.mark_completed, name='mark_completed'),  # Add a trailing slash for consistency
