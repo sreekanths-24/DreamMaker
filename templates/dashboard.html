@@ -15,13 +15,19 @@
         <!-- Customers Card -->
 
         <!-- End Customers Card -->
-
         <!-- Reports -->
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Reports <span>/Today</span></h5>
-
+              <h5 class="card-title">
+                What is your current dream/short term goal?
+              </h5>
+              <form method="POST" action="/AddDreamFormView">
+                {% csrf_token %} {{ form_1.as_p }}
+                <button type="submit" class="btn btn-primary">
+                  Save Dream
+                </button>
+              </form>
               <!-- Line Chart -->
 
               <!-- End Line Chart -->
@@ -29,15 +35,24 @@
           </div>
         </div>
         <!-- End Reports -->
-
+        {% if current_dream_of_user == None %}
+        <p>your dream is null</p>
+        {% else %}
         <!-- Recent Sales -->
         <div class="col-12">
           <div class="card recent-sales overflow-auto">
             <div class="card-body">
-              <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+              <h5 class="card-title">Did you achieve your dream?</h5>
+              <form method="POST" action="/DreamAchievedFormView">
+                {% csrf_token %} {{ form_2.as_p }}
+                <button type="submit" class="btn btn-primary">
+                  Save Dream
+                </button>
+              </form>
             </div>
           </div>
         </div>
+        {% endif %}
         <!-- End Recent Sales -->
 
         <!-- Top Selling -->
@@ -115,8 +130,27 @@
           </ul>
         </div> -->
 
-        <div class="card-body pb-0">
-          <h5 class="card-title">Budget Report <span>| This Month</span></h5>
+        <div class="card-body">
+          <h5 class="card-title">Upcoming events</h5>
+          <div class="activity">
+            {% if events %} {% for event in events %}
+            <div class="activity-item d-flex">
+              <div class="activite-label">{{ event.enddate }}</div>
+              <i
+                class="bi bi-circle-fill activity-badge text-success align-self-start"
+              ></i>
+              <div class="activity-content">
+                {{ event.name }}
+                <a href="{% url 'events' %}" class="fw-bold text-dark">view</a>
+              </div>
+            </div>
+            <!-- End activity item-->
+            {% endfor %} {% else %}
+            <div class="activity-item d-flex">
+              <div class="activity-content">No upcoming events</div>
+            </div>
+            {% endif %}
+          </div>
         </div>
       </div>
       <!-- End Budget Report -->

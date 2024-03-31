@@ -4,10 +4,8 @@ from .models import Todo
 from eventmanagement.models import Events
 from django.contrib import messages
 from .forms import *
-from datetime import timedelta
 from django.utils import timezone
-from datetime import date
-
+from datetime import date, timedelta
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
@@ -19,28 +17,89 @@ def index(request):
         return render(request, 'index.html')
 
 
+
 def dashboard(request):
     if request.user.is_authenticated:
         username = request.user.username
         profile_image = request.user.profile.image.url
         name = request.user.first_name + ' ' + request.user.last_name
         todaysdate = timezone.now().date()
-        # todos = Todo.objects.filter(user=request.user, created__date=todaysdate).order_by('-created')
-        todos = Todo.objects.filter(user=request.user, duedate=date.today()).order_by('-created')
-        events = Events.objects.filter(user=request.user, startdate=date.today())
+
+        # Filter events whose end date is 1 week or less from now
+        one_week_from_now = timezone.now() + timedelta(days=7)
+        events = Events.objects.filter(user=request.user, enddate__lte=one_week_from_now)
+
+        form_1 = AddDreamForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
+        form_2 = DreamAchievedForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
+        
+        current_dream_of_user = Dream.objects.get(user=request.user)
+        if current_dream_of_user.title == '':  # If the user has not set a dream yet
+            current_dream_of_user = None
+        
+
+        # if request.method == 'POST':
+           
+        #     if form_1.is_valid():
+        #         form_1.save()
+        #         messages.success(request, "Dream updated successfully!!")
+        #         return redirect('dashboard')
+        #     else:
+        #         messages.error(request, "An error occurred while updating your dream. Please try again.")
+        #         return redirect('dashboard')
+
+        #     if form_2.is_valid():
+        #         form_2.save()
+        #         messages.success(request, "congratulations for achieving your dream!!")
+        #         return redirect('dashboard')
+        #     else:
+        #         messages.error(request, "An error occurred while updating your dream. Please try again.")
+        #         return redirect('dashboard')
 
         context = {
             'username': username, 
             'profile_image': profile_image, 
             'name': name,
-            'todos': todos,
             'events': events,
             'todaysdate': todaysdate,
+            'form_1': form_1,
+            'form_2': form_2,
+            'current_dream_of_user': current_dream_of_user   
         }
 
         return render(request, 'dashboard.html', context)
     else:
         return render(request, 'dashboard.html')
+
+def AddDreamFormView(request):
+    if request.user.is_authenticated:
+        form = AddDreamForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Dream updated successfully!!")
+            return redirect('dashboard')
+        else:
+            messages.error(request, "An error occurred while updating your dream. Please try again.")
+            return redirect('dashboard')
+    else:
+        messages.success(request, "You must be logged in to add a dream.")
+        return redirect('index')
+
+def DreamAchievedFormView(request):
+    if request.user.is_authenticated:
+        form = DreamAchievedForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
+        if form.is_valid():
+            form.save()
+            if request.user.dream.achieved:
+                messages.success(request, "congratulations for achieving your dream!!")
+            else:
+                messages.success(request, "Dream updated successfully!!")
+            return redirect('dashboard')
+        else:
+            messages.error(request, "An error occurred while updating your dream. Please try again.")
+            return redirect('dashboard')
+    else:
+        messages.success(request, "You must be logged in to mark a dream as achieved.")
+        return redirect('index')
 
 
 def todos(request):
@@ -59,7 +118,7 @@ def todos(request):
                 messages.error(request, "Due date cannot be in the past.")
                 return redirect('todos')
             # Create a new todo object and save it to the database
-            ob = Todo(title=title, description=description, complete=complete, user=request.user, duedate=duedate, priority=priority)
+            ob = Todo(title=title, description=description, complete=complete, user=request.user, duedate=duedate, priority=priority, dream=request.user.dream)
             ob.save()
             # Add the todo to the calendar
             # obj = Events(user = request.user, name = title, startdate = duedate, enddate = duedate, description = description)

@@ -9,7 +9,8 @@ from django.contrib import messages
 def events(request):
     if request.user.is_authenticated:
         current_user = request.user
-        form = EventEditForm(request.POST or None, initial={'user': current_user})
+        current_dream = request.user.dream
+        form = EventEditForm(request.POST or None, initial={'user': current_user, 'dream': current_dream})
         if request.method == 'POST':
             if form.is_valid():
                 form.save()
@@ -88,7 +89,7 @@ def add_event(request):
     enddate = request.GET.get('end', None)
     title = request.GET.get('title', None)
     description = request.GET.get('description', None)
-    event = Events(name=title, startdate=startdate, enddate=enddate, description=description, user=request.user)
+    event = Events(name=title, startdate=startdate, enddate=enddate, description=description, user=request.user, dream=request.user.dream)
     event.save()
     data = {}
     return JsonResponse(data)
