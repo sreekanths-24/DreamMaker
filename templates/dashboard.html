@@ -16,6 +16,9 @@
 
         <!-- End Customers Card -->
         <!-- Reports -->
+        <!-- Dashboard template -->
+        <!-- Add this button inside the current_dream_of_user block -->
+
         <div class="col-12">
           <div class="card">
             <div class="card-body">
@@ -42,7 +45,9 @@
         <div class="col-12">
           <div class="card recent-sales overflow-auto">
             <div class="card-body">
-              <h5 class="card-title">Did you achieve your dream?</h5>
+              <h5 class="card-title">
+                Do you feel like you achieved your dream?
+              </h5>
               <form method="POST" action="/DreamAchievedFormView">
                 {% csrf_token %} {{ form_2.as_p }}
                 <button type="submit" class="btn btn-primary">
@@ -54,6 +59,25 @@
         </div>
         {% endif %}
         <!-- End Recent Sales -->
+        {% if current_dream_of_user %}
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Discard Dream</h5>
+              <p>
+                Do you feel like current dream is not worth pursuing and wish to
+                startover?
+              </p>
+              <form method="POST" action="{% url 'discard_dream' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                  Discard Dream
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
         <!-- Top Selling -->
         <div class="col-12">

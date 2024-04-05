@@ -12,4 +12,5 @@ urlpatterns = [
     path('todo_detail/<int:id>/todo_edit/', views.todo_edit, name='todo_edit'),  # New URL mapping for
     path('AddDreamFormView', views.AddDreamFormView, name='AddDreamFormView'),  # New URL mapping for AddDreamFormView
     path('DreamAchievedFormView', views.DreamAchievedFormView, name='DreamAchievedFormView'),  # New URL mapping for DreamAchievedFormView
+    path('discard_dream/', views.discard_dream, name='discard_dream'),
 ]

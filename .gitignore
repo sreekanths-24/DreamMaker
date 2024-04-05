@@ -1,0 +1,9 @@
+.idea/
+core/__pycache__/
+core/migrations/__pycache__/
+users/__pycache__/
+users/migrations/__pycache__/
+eventmanagement/__pycache__/
+eventmanagement/migrations/__pycache__/
+my_todo_app/__pycache__/
+venv/

@@ -1,11 +1,16 @@
 from datetime import datetime, date
-from django.shortcuts import render, redirect
-from .models import Todo
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Todo, Dream
 from eventmanagement.models import Events
 from django.contrib import messages
 from .forms import *
 from django.utils import timezone
 from datetime import date, timedelta
+from .forms import AddDreamForm, DreamAchievedForm
+from django.db.models import F
+
+def handler404(request):
+    return render(request, '404.html')
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
@@ -16,44 +21,32 @@ def index(request):
     else:
         return render(request, 'index.html')
 
-
-
 def dashboard(request):
     if request.user.is_authenticated:
         username = request.user.username
         profile_image = request.user.profile.image.url
-        name = request.user.first_name + ' ' + request.user.last_name
+        name = request.user.get_full_name()
         todaysdate = timezone.now().date()
 
         # Filter events whose end date is 1 week or less from now
         one_week_from_now = timezone.now() + timedelta(days=7)
         events = Events.objects.filter(user=request.user, enddate__lte=one_week_from_now)
 
-        form_1 = AddDreamForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
-        form_2 = DreamAchievedForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
-        
-        current_dream_of_user = Dream.objects.get(user=request.user)
-        if current_dream_of_user.title == '':  # If the user has not set a dream yet
+        if request.user.dream:
+            # Initialize dream-related forms and variables
+            form_1 = AddDreamForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
+            form_2 = DreamAchievedForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
             current_dream_of_user = None
-        
+        else:
+            request.user.dream = "Empty Dream"
+            form_1 = AddDreamForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
+            form_2 = DreamAchievedForm(request.POST or None, instance=request.user.dream, initial={'user': request.user})
+            current_dream_of_user = None
 
-        # if request.method == 'POST':
-           
-        #     if form_1.is_valid():
-        #         form_1.save()
-        #         messages.success(request, "Dream updated successfully!!")
-        #         return redirect('dashboard')
-        #     else:
-        #         messages.error(request, "An error occurred while updating your dream. Please try again.")
-        #         return redirect('dashboard')
-
-        #     if form_2.is_valid():
-        #         form_2.save()
-        #         messages.success(request, "congratulations for achieving your dream!!")
-        #         return redirect('dashboard')
-        #     else:
-        #         messages.error(request, "An error occurred while updating your dream. Please try again.")
-        #         return redirect('dashboard')
+        try:
+            current_dream_of_user = request.user.dream
+        except Dream.DoesNotExist:
+            current_dream_of_user = "Empty Dream"
 
         context = {
             'username': username, 
@@ -68,7 +61,34 @@ def dashboard(request):
 
         return render(request, 'dashboard.html', context)
     else:
-        return render(request, 'dashboard.html')
+        return redirect('index')
+
+def discard_dream(request):
+    if request.method == 'POST':
+        # Check if a Dream object exists for the current user
+        if Dream.objects.filter(user=request.user).exists():
+            current_dream_of_user = get_object_or_404(Dream, user=request.user)
+            todos = Todo.objects.filter(dream=current_dream_of_user)
+            events = Events.objects.filter(dream=current_dream_of_user)
+
+            # Delete all todos associated with the dream
+            todos.delete()
+
+            # Delete all events associated with the dream
+            events.delete()
+
+            # Rename the dream to something else (for example, 'Discarded Dream')
+            current_dream_of_user.title = 'Now set a new goal/dream'
+            current_dream_of_user.save()
+
+            messages.success(request, "Dream discarded successfully!")
+        else:
+            messages.error(request, "You don't have a dream to discard.")
+
+        return redirect('dashboard')
+
+    return render(request, 'dashboard.html')
+
 
 def AddDreamFormView(request):
     if request.user.is_authenticated:

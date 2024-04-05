@@ -13,7 +13,7 @@ def login_user(request):
         if user is not None:
             login(request, user)
             messages.success(request, f'You have been logged in as {username}')
-            return redirect('index')
+            return redirect('dashboard')
         else:
             messages.error(request, 'Invalid username or password')
             return redirect('login_user')

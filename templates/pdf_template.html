@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dream Report</title>
+</head>
+<body>
+    <h1>{{ user_dream.title }}</h1>
+
+    <h2>Todos:</h2>
+    <ul>
+        {% for todo in todos %}
+        <li>{{ todo.title }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Events:</h2>
+    <ul>
+        {% for event in events %}
+        <li>{{ event.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
