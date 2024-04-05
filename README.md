@@ -15,7 +15,7 @@ DreamMaker is a web application designed to help users manage their dreams, goal
 - **Django**: Backend web framework for building the DreamMaker application.
 - **HTML/CSS/JavaScript**: Frontend development for creating user interfaces and interactivity.
 - **SQLite**: Default database used by Django for data storage and retrieval.
-- **PyGObject**: Python bindings for the GTK library, used for generating PDF reports.
+<!-- - **PyGObject**: Python bindings for the GTK library, used for generating PDF reports. -->
 - **Bootstrap**: Frontend framework for responsive and mobile-friendly design.
 - **Font Awesome**: Icon toolkit used for adding scalable vector icons to the user interface.
 
