@@ -13,4 +13,5 @@ urlpatterns = [
     path('AddDreamFormView', views.AddDreamFormView, name='AddDreamFormView'),  # New URL mapping for AddDreamFormView
     path('DreamAchievedFormView', views.DreamAchievedFormView, name='DreamAchievedFormView'),  # New URL mapping for DreamAchievedFormView
     path('discard_dream/', views.discard_dream, name='discard_dream'),
+    path('download_report/', views.download_report, name='download_report'),
 ]

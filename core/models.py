@@ -6,7 +6,7 @@ from django.dispatch import receiver
 
 class Dream(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=800)
+    title = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     achieved = models.BooleanField(default=False)
     def __str__(self):

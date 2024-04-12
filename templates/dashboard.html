@@ -27,10 +27,21 @@
               </h5>
               <form method="POST" action="/AddDreamFormView">
                 {% csrf_token %} {{ form_1.as_p }}
-                <button type="submit" class="btn btn-primary">
-                  Save Dream
+                <button type="submit" class="btn btn-primary m-1">
+                  {% if current_dream_of_user.title == "" %} Add Dream
+                  {% else %} Save Dream {% endif %} 
                 </button>
+                {% if current_dream_of_user.title != "" %}
+                <button type="button" class="btn btn-outline-success m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Dream Achieved
+                </button>
+                <button type="button" class="btn btn-outline-danger m-1" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                  Discard Dream
+                </button>
+                {% endif %}
               </form>
+              <!-- Button trigger modal -->
+
               <!-- Line Chart -->
 
               <!-- End Line Chart -->
@@ -38,56 +49,21 @@
           </div>
         </div>
         <!-- End Reports -->
-        {% if current_dream_of_user == None %}
-        <p>your dream is null</p>
-        {% else %}
-        <!-- Recent Sales -->
-        <div class="col-12">
-          <div class="card recent-sales overflow-auto">
-            <div class="card-body">
-              <h5 class="card-title">
-                Do you feel like you achieved your dream?
-              </h5>
-              <form method="POST" action="/DreamAchievedFormView">
-                {% csrf_token %} {{ form_2.as_p }}
-                <button type="submit" class="btn btn-primary">
-                  Save Dream
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-        {% endif %}
+       
         <!-- End Recent Sales -->
-        {% if current_dream_of_user %}
+        
+        {% if current_dream_of_user.achieved == True %}
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Discard Dream</h5>
-              <p>
-                Do you feel like current dream is not worth pursuing and wish to
-                startover?
-              </p>
-              <form method="POST" action="{% url 'discard_dream' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">
-                  Discard Dream
-                </button>
-              </form>
+              <h5 class="card-title">Download Goal Report</h5>
+              <p>Download a report of your goal achievement journey.</p>
+              <a href="{% url 'download_report' %}" class="btn btn-success">Download Report</a>
             </div>
           </div>
         </div>
         {% endif %}
-
-        <!-- Top Selling -->
-        <div class="col-12">
-          <div class="card top-selling overflow-auto">
-            <div class="card-body pb-0">
-              <h5 class="card-title">Top Selling <span>| Today</span></h5>
-            </div>
-          </div>
-        </div>
-        <!-- End Top Selling -->
+        
       </div>
     </div>
     <!-- End Left side columns -->
@@ -179,24 +155,68 @@
       </div>
       <!-- End Budget Report -->
 
-      <!-- Website Traffic -->
-      <div class="card">
-        <div class="card-body pb-0">
-          <h5 class="card-title">Website Traffic <span>| Today</span></h5>
-        </div>
-      </div>
-      <!-- End Website Traffic -->
-
-      <!-- News & Updates Traffic -->
-      <div class="card">
-        <div class="card-body pb-0">
-          <h5 class="card-title">News & Updates</h5>
-        </div>
-      </div>
       <!-- End News & Updates -->
     </div>
     <!-- End Right side columns -->
   </div>
 </section>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Do you feel like you achieved your dream?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% if current_dream_of_user == "" %}
+        <p>your dream is null</p>
+        {% else %}
+        
+        <form method="POST" action="/DreamAchievedFormView">
+          {% csrf_token %} {{ form_2.as_p }}
+          <button type="submit" class="btn btn-primary">
+            Save Dream
+          </button>
+        </form>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Discard Dream</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% if current_dream_of_user %}
+        <p>
+          Do you feel like current dream is not worth pursuing and wish to
+          startover?
+        </p>
+        <form method="POST" action="{% url 'discard_dream' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">
+            Discard Dream
+          </button>
+        </form>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

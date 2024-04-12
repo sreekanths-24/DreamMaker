@@ -8,6 +8,8 @@ from django.utils import timezone
 from datetime import date, timedelta
 from .forms import AddDreamForm, DreamAchievedForm
 from django.db.models import F
+from .utils import generate_goal_journey_report_image
+from django.http import HttpResponse
 
 def handler404(request):
     return render(request, '404.html')
@@ -78,7 +80,7 @@ def discard_dream(request):
             events.delete()
 
             # Rename the dream to something else (for example, 'Discarded Dream')
-            current_dream_of_user.title = 'Now set a new goal/dream'
+            current_dream_of_user.title = 'Now set a new goal/dream e.g. "Learn Python" or "Get a new job"'
             current_dream_of_user.save()
 
             messages.success(request, "Dream discarded successfully!")
@@ -228,3 +230,28 @@ def todo_edit(request, id):  # New view function to edit a task
     else:
         messages.success(request, "You must be logged in to edit todos.")
         return redirect('index')
+
+
+def download_report(request):
+    if request.user.is_authenticated:
+        # Fetch data from the database
+        user = request.user
+        try:
+            current_dream = user.dream
+            todos = Todo.objects.filter(user=user, dream=current_dream)
+            events = Events.objects.filter(user=user, dream=current_dream)
+        except Dream.DoesNotExist:
+            current_dream = None
+            todos = None
+            events = None
+
+        # Generate goal journey report image
+        report_image_data = generate_goal_journey_report_image(user, current_dream, todos, events)
+
+        # Return the image as a downloadable file
+        response = HttpResponse(content_type='image/png')
+        response['Content-Disposition'] = 'attachment; filename="goal_journey_report.png"'
+        response.write(report_image_data)
+        return response
+    else:
+        return HttpResponse("You must be logged in to download the report.")

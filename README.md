@@ -7,7 +7,6 @@ DreamMaker is a web application designed to help users manage their dreams, goal
 - **Dream Management**: Users can create, view, update, and delete their dreams or short-term goals.
 - **Todo Management**: Users can create, view, update, and delete todos associated with their dreams, helping them stay organized and focused on achieving their goals.
 - **Event Management**: Users can manage events relevant to their dreams, such as deadlines, meetings, or milestones.
-<!-- - **PDF Reports**: Generate PDF reports containing details of the user's dreams, todos, and events for offline viewing or printing. -->
 - **User Authentication**: Secure user authentication system using Django's built-in authentication framework.
 
 ## Technologies Used
@@ -15,7 +14,6 @@ DreamMaker is a web application designed to help users manage their dreams, goal
 - **Django**: Backend web framework for building the DreamMaker application.
 - **HTML/CSS/JavaScript**: Frontend development for creating user interfaces and interactivity.
 - **SQLite**: Default database used by Django for data storage and retrieval.
-<!-- - **PyGObject**: Python bindings for the GTK library, used for generating PDF reports. -->
 - **Bootstrap**: Frontend framework for responsive and mobile-friendly design.
 - **Font Awesome**: Icon toolkit used for adding scalable vector icons to the user interface.
 
@@ -60,7 +58,6 @@ DreamMaker is a web application designed to help users manage their dreams, goal
 - **Dreams**: Add, edit, and delete dreams or short-term goals.
 - **Todos**: Create, update, and delete todos associated with your dreams.
 - **Events**: Manage events relevant to your dreams, such as deadlines or milestones.
-- **Generate PDF Report**: Download a PDF report containing details of your dreams, todos, and events.
 
 ## Contributing
 

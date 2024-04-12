@@ -24,7 +24,7 @@ class AddDreamForm(forms.ModelForm):
         model = Dream
         fields = ['title','user']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your dream here', 'required': True}),
             'user': forms.HiddenInput()
         }
 class DreamAchievedForm(forms.ModelForm):
