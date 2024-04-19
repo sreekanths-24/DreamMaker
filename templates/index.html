@@ -26,7 +26,9 @@
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a href="#about" class="nav-link font-weight-bold">About</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link font-weight-bold">Contact</a></li>
+                    <li class="nav-item"><a href="#features" class="nav-link font-weight-bold">Features</a></li>
+                    <li class="nav-item"><a href="#Testimonials" class="nav-link font-weight-bold">Testimonials</a></li>
+                    <li class="nav-item"><a href="https://iamsreekanths.netlify.app/" target="_blank" class="nav-link font-weight-bold">Contact</a></li>
                     <li class="nav-item"><a href="{% url 'login_user' %}" class="btn btn-outline-light mx-md-2 " style="border-radius: 20px;">Login</a></li>
                     <li class="nav-item"><a href="{% url 'register_user' %}" class="btn btn-outline-light mx-md-2" style="border-radius: 20px;">Register</a></li>
                 </ul>
@@ -50,58 +52,93 @@
                 <h2 class="display-3">About DreamMaker</h2>
                 <p>DreamMaker is a web application designed to help users manage their dreams, goals, todos, and events in an organized manner. With DreamMaker, users can set and track their dreams, create todos associated with their dreams, and manage events relevant to their goals.</p>
             </div>
+          </div>
         </div>
-    </div>
-    <div class="container">
-        <h2 class="text-center display-4">Why Choose DreamMaker?</h2>
-        <div class="row justify-content-center my-5">
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body text-center custom-card-body">
-                        <i class="fas fa-tasks feature-icon"></i>
-                        <h3 class="card-title feature-title pt-3">Goal Management</h3>
-                        <p class="card-text feature-description">Easily create, track, and manage your goals with DreamMaker.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body text-center custom-card-body">
-                        <i class="fas fa-list-ul feature-icon"></i>
-                        <h3 class="card-title feature-title pt-3">Todo Management</h3>
-                        <p class="card-text feature-description">Stay organized by managing todos associated with your goals.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body text-center custom-card-body">
-                        <i class="fas fa-calendar-alt feature-icon"></i>
-                        <h3 class="card-title feature-title pt-3">Event Management</h3>
-                        <p class="card-text feature-description">Keep track of important events related to your goals and dreams.</p>
-                    </div>
+        <!-- <div  id="features"></div> -->
+    <div class="container" id="features">
+      <h2 class="text-center display-4">Why Choose DreamMaker?</h2>
+      <div class="row justify-content-center my-5">
+          <!-- Goal Management -->
+          <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                  <div class="card-body text-center custom-card-body">
+                      <i class="fas fa-tasks feature-icon"></i>
+                      <h3 class="card-title feature-title pt-3">Goal Management</h3>
+                      <p class="card-text feature-description">Easily create, track, and manage your goals with DreamMaker.</p>
+                  </div>
+              </div>
+          </div>
+          <!-- Todo Management -->
+          <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                  <div class="card-body text-center custom-card-body">
+                      <i class="fas fa-list-ul feature-icon"></i>
+                      <h3 class="card-title feature-title pt-3">Todo Management</h3>
+                      <p class="card-text feature-description">Stay organized by managing todos associated with your goals.</p>
+                  </div>
+              </div>
+          </div>
+          <!-- Event Management -->
+          <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                  <div class="card-body text-center custom-card-body">
+                      <i class="fas fa-calendar-alt feature-icon"></i>
+                      <h3 class="card-title feature-title pt-3">Event Management</h3>
+                      <p class="card-text feature-description">Keep track of important events related to your goals and dreams.</p>
+                  </div>
+              </div>
+          </div>
+          <!-- Secure Authentication -->
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body text-center custom-card-body">
+                    <i class="fas fa-paint-brush feature-icon"></i>
+                    <h3 class="card-title feature-title pt-3">Simple UI/UX</h3>
+                    <p class="card-text feature-description">DreamMaker's simple and intuitive design provides good user interface.</p>
                 </div>
             </div>
         </div>
-    </div>
+          <!-- Generate Achievement Report -->
+          <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                  <div class="card-body text-center custom-card-body">
+                      <i class="fas fa-award feature-icon"></i>
+                      <h3 class="card-title feature-title pt-3">Generate Report</h3>
+                      <p class="card-text feature-description">Download your achievement to let your results speak for you.</p>
+                  </div>
+              </div>
+          </div>
+          <!-- Share Your Journey -->
+          <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                  <div class="card-body text-center custom-card-body">
+                      <i class="fas fa-share-alt feature-icon"></i>
+                      <h3 class="card-title feature-title pt-3">Share Your Journey</h3>
+                      <p class="card-text feature-description">Share your journey with others to inspire them.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
     <div class="row about-section">
         
         <div class="col-md-6 d-flex align-items-center justify-content-center">
-            <div class="text-md-right">
+            <div class="text-center">
                 <h2 class="display-3">How It Works</h2>
-                <div class="card mb-4 shadow-sm">
+                <div class="mb-4 shadow-sm">
                     <div class="card-body text-center custom-card-body">
                         <h3 class="card-title feature-title pt-3">Step 1: Sign Up</h3>
                         <p class="card-text feature-description">Create your account on DreamMaker by signing up with your email and password.</p>
                     </div>
                 </div>
-                <div class="card mb-4 shadow-sm">
+                <div class="mb-4 shadow-sm">
                     <div class="card-body text-center custom-card-body">
                         <h3 class="card-title feature-title pt-3">Step 2: Set Goals</h3>
                         <p class="card-text feature-description">Define your dreams and goals by setting them up in DreamMaker's intuitive interface.</p>
                     </div>
                 </div>
-                <div class="card mb-4 shadow-sm">
+                <div class="mb-4 shadow-sm">
                     <div class="card-body text-center custom-card-body">
                         <h3 class="card-title feature-title pt-3">Step 3: Manage Tasks</h3>
                         <p class="card-text feature-description">Stay organized by managing tasks associated with your goals and tracking your progress.</p>
@@ -116,6 +153,55 @@
     </div>
     
 </div>
+<div class="container" id="Testimonials">
+  <h2 class="text-center display-4 mb-5">Testimonials</h2>
+  <div class="row">
+      <!-- Testimonial 1 -->
+      <div class="col-md-4">
+          <div class="card mb-4 shadow-sm testimonial-card">
+              <div class="card-body">
+                  <p class="card-text">"DreamMaker has helped me stay organized and focused on my goals. I love how easy it is to track my progress and manage my tasks."</p>
+              </div>
+              <div class="card-footer text-muted text-center">
+                  <div class="testimonial-icon">
+                      <i class="fas fa-user"></i>
+                  </div>
+                  <cite>John Doe</cite>
+              </div>
+          </div>
+      </div>
+      <!-- Testimonial 2 -->
+      <div class="col-md-4">
+          <div class="card mb-4 shadow-sm testimonial-card">
+              <div class="card-body">
+                  <p class="card-text">"I've been using DreamMaker for a few months now, and it's made a huge difference in my productivity. Highly recommend!"</p>
+              </div>
+              <div class="card-footer text-muted text-center">
+                  <div class="testimonial-icon">
+                      <i class="fas fa-user"></i>
+                  </div>
+                  <cite>Jane Smith</cite>
+              </div>
+          </div>
+      </div>
+      <!-- Testimonial 3 -->
+      <div class="col-md-4">
+          <div class="card mb-4 shadow-sm testimonial-card">
+              <div class="card-body">
+                  <p class="card-text">"DreamMaker's user-friendly interface and intuitive features make it the perfect tool for managing my goals and tasks. I couldn't be happier with it!"</p>
+              </div>
+              <div class="card-footer text-muted text-center">
+                  <div class="testimonial-icon">
+                      <i class="fas fa-user"></i>
+                  </div>
+                  <cite>Michael Johnson</cite>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
 <!-- Remove the container if you want to extend the Footer to full width. -->
     <!-- Footer -->
     <footer class="text-center text-white" style="background-color: #007bff">
@@ -131,12 +217,22 @@
                 <a href="#about" class="text-white">About</a>
               </h6>
             </div>
+            <div class="col-md-2">
+              <h6 class="text-uppercase font-weight-bold">
+                <a href="#features" class="text-white">Features</a>
+              </h6>
+            </div>
+            <div class="col-md-2">
+              <h6 class="text-uppercase font-weight-bold">
+                <a href="#Testimonials" class="text-white">Testimonials</a>
+              </h6>
+            </div>
             <!-- Grid column -->
   
             <!-- Grid column -->
             <div class="col-md-2">
               <h6 class="text-uppercase font-weight-bold">
-                <a href="#!" class="text-white">Contact</a>
+                <a href="https://iamsreekanths.netlify.app/" target="_blank" class="text-white">Contact</a>
               </h6>
             </div>
             <!-- Grid column -->
@@ -162,13 +258,13 @@
         <!-- Section: Social -->
         <section class="text-center mb-5">
           
-          <a href="" class="text-white me-4">
+          <a href="https://www.twitter.com/_Sreekanth_S_/" class="text-white me-4">
             <i class="fab fa-twitter"></i>
           </a>
-          <a href="" class="text-white me-4">
+          <a href="https://www.linkedin.com/in/sreekanth-s-663418232" class="text-white me-4">
             <i class="fab fa-linkedin"></i>
           </a>
-          <a href="" class="text-white me-4">
+          <a href="https://github.com/sreekanths-24" class="text-white me-4">
             <i class="fab fa-github"></i>
           </a>
         </section>
