@@ -28,9 +28,15 @@
                     <li class="nav-item"><a href="#about" class="nav-link font-weight-bold">About</a></li>
                     <li class="nav-item"><a href="#features" class="nav-link font-weight-bold">Features</a></li>
                     <li class="nav-item"><a href="#Testimonials" class="nav-link font-weight-bold">Testimonials</a></li>
+                    <li class="nav-item"><a href="#FAQ" class="nav-link font-weight-bold">FAQ</a></li>
                     <li class="nav-item"><a href="https://iamsreekanths.netlify.app/" target="_blank" class="nav-link font-weight-bold">Contact</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'dashboard' %}" class="btn btn-outline-light mx-md-2" style="border-radius: 20px;">Dashboard</a></li>
+                    <li class="nav-item"><a href="{% url 'logout_user' %}" class="btn btn-outline-light mx-md-2" style="border-radius: 20px;">Logout</a></li>
+                    {% else %}
                     <li class="nav-item"><a href="{% url 'login_user' %}" class="btn btn-outline-light mx-md-2 " style="border-radius: 20px;">Login</a></li>
                     <li class="nav-item"><a href="{% url 'register_user' %}" class="btn btn-outline-light mx-md-2" style="border-radius: 20px;">Register</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -39,7 +45,11 @@
 <div class="jumbotron text-center">
     <h1 class="display-4">Welcome to DreamMaker</h1>
     <p class="lead">Achieve Your Dreams with Ease</p>
+    {% if user.is_authenticated %}
+    <a class="btn btn-primary btn-lg btn-get-started" href="{% url 'dashboard' %}" role="button">Go to Dashboard</a>
+    {% else %}
     <a class="btn btn-primary btn-lg btn-get-started" href="{% url 'login_user' %}" role="button">Get Started</a>
+    {% endif %}
 </div>
 
 <div class="container" id="about">
@@ -200,6 +210,87 @@
       </div>
   </div>
 </div>
+<div class="container about-section" id="FAQ">
+  <h2 class="text-center display-4 mb-5">FAQs</h2>
+  <div id="accordion" class="accordion">
+      <!-- FAQ Item 1 -->
+      <div class="card">
+          <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      What is DreamMaker?
+                  </button>
+              </h5>
+          </div>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                  DreamMaker is a web application designed to help users manage their dreams, goals, todos, and events in an organized manner. With DreamMaker, users can set and track their dreams, create todos associated with their dreams, and manage events relevant to their goals.
+              </div>
+          </div>
+      </div>
+      <!-- FAQ Item 2 -->
+      <div class="card">
+          <div class="card-header" id="headingTwo">
+              <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      How can I get started with DreamMaker?
+                  </button>
+              </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body">
+                  Getting started with DreamMaker is easy! Simply sign up for an account, log in, and start setting your dreams, goals, todos, and events.
+              </div>
+          </div>
+      </div>
+      <!-- FAQ Item 3 -->
+      <div class="card">
+          <div class="card-header" id="headingThree">
+              <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Is DreamMaker free to use?
+                  </button>
+              </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+              <div class="card-body">
+                  Yes, DreamMaker is a free web application that you can use to manage your dreams, goals, todos, and events. Sign up today and start achieving your dreams!
+              </div>
+          </div>
+      </div>
+      <!-- Add more FAQ items as needed -->
+       <!-- FAQ Item 4 -->
+       <div class="card">
+        <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Can I access DreamMaker from any device?
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+                Yes, DreamMaker is fully responsive and can be accessed from any device, including smartphones and tablets. Simply visit our website using your mobile browser and log in to access all the features.
+            </div>
+        </div>
+    </div>
+    <!-- FAQ Item 5 -->
+    <div class="card">
+        <div class="card-header" id="headingFive">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Is my data secure with DreamMaker?
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+            <div class="card-body">
+                Yes, we take the security of your data very seriously. DreamMaker employs industry-standard security measures to protect your personal information and ensure that your data is safe and secure.
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Remove the container if you want to extend the Footer to full width. -->
@@ -225,6 +316,12 @@
             <div class="col-md-2">
               <h6 class="text-uppercase font-weight-bold">
                 <a href="#Testimonials" class="text-white">Testimonials</a>
+              </h6>
+            </div>
+            <!-- Grid column -->
+            <div class="col-md-2">
+              <h6 class="text-uppercase font-weight-bold">
+                <a href="#FAQ" class="text-white">FAQ</a>
               </h6>
             </div>
             <!-- Grid column -->
